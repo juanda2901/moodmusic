@@ -60,7 +60,7 @@ async function buscarMusica(mood) {
     try {
 
         const respuesta = await fetch(
-            `http://192.168.1.106:3000/playlist/${mood}`
+            `https://tu-url.onrender.com`
         );
 
         const datos = await respuesta.json();
