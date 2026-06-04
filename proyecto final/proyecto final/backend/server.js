@@ -203,7 +203,7 @@ app.get('/playlist/:mood', (req, res) => {
     });
 });
 
-const PUERTO = 3000;
+const PUERTO = process.env.PORT || 3000;
 
 app.listen(PUERTO, () => {
 
