@@ -57,17 +57,19 @@ async function buscarMusica(mood) {
 
     resultado.innerHTML = '';
 
-  
-
     try {
 
         const respuesta = await fetch(
             `https://moodmusic-uxgb.onrender.com/playlist/${mood}`
         );
 
+        if (!respuesta.ok) {
+            throw new Error('Error obteniendo canciones');
+        }
+
         const datos = await respuesta.json();
 
-        cancionesGlobal = datos.canciones;
+        cancionesGlobal = datos.canciones || [];
 
         actualizarStats();
 
@@ -81,7 +83,7 @@ async function buscarMusica(mood) {
 
     } catch(error){
 
-        console.log(error);
+        console.error(error);
 
         mostrarToast('Error conectando con backend');
 
@@ -90,7 +92,6 @@ async function buscarMusica(mood) {
         loader.classList.add('hidden');
     }
 }
-
 function mostrarCanciones(canciones, mood){
 
     const resultado =
