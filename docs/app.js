@@ -60,7 +60,44 @@ async function buscarMusica(mood) {
     try {
 
         const respuesta = await fetch(
-            `http://192.168.1.106:3000/playlist/${mood}`
+            `https://moodmusic-uxgb.onrender.com/playlist/${mood}`
+        );
+
+        if (!respuesta.ok) {
+
+            throw new Error('Error obteniendo canciones');
+        }
+
+        const datos = await respuesta.json();
+
+        cancionesGlobal = datos.canciones || [];
+
+        actualizarStats();
+
+        mostrarCanciones(cancionesGlobal, mood);
+
+        document
+        .getElementById('seccionCanciones')
+        .scrollIntoView({
+            behavior: 'smooth'
+        });
+
+    } catch(error){
+
+        console.error(error);
+
+        mostrarToast('Error conectando con backend');
+
+    } finally {
+
+        loader.classList.add('hidden');
+    }
+}
+
+    try {
+
+        const respuesta = await fetch(
+            `https://moodmusic-uxgb.onrender.com/playlist/${mood}`
         );
 
         const datos = await respuesta.json();
